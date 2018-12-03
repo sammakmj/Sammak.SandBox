@@ -11,7 +11,7 @@ namespace Sammak.SandBox.Services
     /// <summary>
     /// 
     /// </summary>
-    public class BeatAuthHttpService : HttpService
+    public class AuthHttpService : HttpService
     {
         #region Private variables
 
@@ -22,7 +22,7 @@ namespace Sammak.SandBox.Services
         /// <summary>
         /// 
         /// </summary>
-        public BeatAuthHttpService(): base(RootUrl())
+        public AuthHttpService(): base(RootUrl())
         {
         }
 
@@ -32,18 +32,18 @@ namespace Sammak.SandBox.Services
 
         private static string RootUrl()
         {
-            var beatAuthHost = ConfigurationManager.AppSettings["Beat.Auth.Host"];
-            var beatAuthPort = ConfigurationManager.AppSettings["Beat.Auth.Port"];
-            var beatAuthApiPrefix = ConfigurationManager.AppSettings["Beat.Auth.ApiPrefix"];
+            var authHost = ConfigurationManager.AppSettings["Auth.Host"];
+            var authPort = ConfigurationManager.AppSettings["Auth.Port"];
+            var authApiPrefix = ConfigurationManager.AppSettings["Auth.ApiPrefix"];
 
-            if (string.IsNullOrWhiteSpace(beatAuthHost) || beatAuthHost.Length < 1)
+            if (string.IsNullOrWhiteSpace(authHost) || authHost.Length < 1)
             {
-                throw new Exception("The 'Beat.Auth.Host' URL define is missing from the config file!");
+                throw new Exception("The 'Auth.Host' URL define is missing from the config file!");
             }
 
-            // NOTE: the 'Beat.Auth.Port' and/or 'Beat.Auth.ApiPrefix' defines optiaonly could be missing, 
-            // in  which case the 'Beat.Auth.Host' should hold the full path of the host url
-            string rootUri = $"{beatAuthHost}{beatAuthPort}/{beatAuthApiPrefix}".TrimEnd();
+            // NOTE: the 'Auth.Port' and/or 'Auth.ApiPrefix' defines optiaonly could be missing, 
+            // in  which case the 'Auth.Host' should hold the full path of the host url
+            string rootUri = $"{authHost}{authPort}/{authApiPrefix}".TrimEnd();
 
             // NOTE: the root url should end with a "/" so that the path would be properlty appended by the HttpClient class to form a full url.
             // if the ending slash is missing, the last word after the last existing slash would be dropped, then the path gets appended rendering a wrong url.
@@ -59,7 +59,7 @@ namespace Sammak.SandBox.Services
         #region Public Methods
 
         /// <summary>
-        /// When calling this instance method, the caller must dispose of the BeatAuthHttpServiceBase class object in a using statement or call Dispose direclty.
+        /// When calling this instance method, the caller must dispose of the AuthHttpServiceBase class object in a using statement or call Dispose direclty.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -69,7 +69,7 @@ namespace Sammak.SandBox.Services
         }
 
         /// <summary>
-        /// When calling this instance method, the caller must dispose of the BeatAuthHttpServiceBase class object in a using statement or call Dispose direclty.
+        /// When calling this instance method, the caller must dispose of the AuthHttpServiceBase class object in a using statement or call Dispose direclty.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -109,7 +109,7 @@ namespace Sammak.SandBox.Services
         /// <returns></returns>
         public static async Task<SsoActionResult> ValidateSsoAsyncStatic(SsoRequest request)
         {
-            using (var httpService = new BeatAuthHttpService())
+            using (var httpService = new AuthHttpService())
             {
                 return await httpService.HttpPostAsync<SsoRequest, SsoActionResult>($"ssoaccess", request);
             }
@@ -122,7 +122,7 @@ namespace Sammak.SandBox.Services
         /// <returns></returns>
         public static async Task<SsoAuthUrlResult> BuildAuthUrlStatic(SsoAuthUriRequest request)
         {
-            using (var httpService = new BeatAuthHttpService())
+            using (var httpService = new AuthHttpService())
             {
                 return await httpService.HttpPostAsync<SsoAuthUriRequest, SsoAuthUrlResult>($"getssourl", request);
             }
@@ -135,7 +135,7 @@ namespace Sammak.SandBox.Services
         /// <returns></returns>
         public static async Task<SsoActionResult> ValidateSingleSignOnStatic(SsoModel request)
         {
-            using (var httpService = new BeatAuthHttpService())
+            using (var httpService = new AuthHttpService())
             {
                 return await httpService.HttpPostAsync<SsoModel, SsoActionResult>($"validatesso", request);
             }
@@ -148,7 +148,7 @@ namespace Sammak.SandBox.Services
         /// <returns></returns>
         public static async Task<SsoTokenResult> GetSsoTokenStatic(SsoTokenRequest request)
         {
-            using (var httpService = new BeatAuthHttpService())
+            using (var httpService = new AuthHttpService())
             {
                 return await httpService.HttpPostAsync<SsoTokenRequest, SsoTokenResult>($"getssotoken", request);
             }

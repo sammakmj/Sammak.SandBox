@@ -248,6 +248,7 @@ namespace Sammak.SandBox.Helpers
         {
             return (int)((object)value);
         }
+
         public static T ToEnum<T>(this int value) where T : struct
         {
             var type = typeof(T);
@@ -258,5 +259,40 @@ namespace Sammak.SandBox.Helpers
 
             return (T)Enum.ToObject(typeof(T), value);
         }
+
+        public static bool Equals<TKey, TValue> (this Dictionary<TKey, TValue> dict, object obj) //where TKey: Type where TValue: Type
+        {
+            if (obj is null)
+                return false;
+
+            if (ReferenceEquals(dict, obj))
+                return true;
+
+            if (dict.GetType() != obj.GetType())
+                return false;
+
+            var other = (Dictionary<TKey, TValue>)obj;
+            if (dict.Count != other.Count)
+                return false;
+
+            // check keys are the same
+            foreach (TKey k in dict.Keys)
+                if (!other.ContainsKey(k))
+                    return false;
+
+            // check values are the same
+            foreach (TKey key in dict.Keys)
+            {
+                // both null considered to be the same
+                if (dict[key] == null && other[key] == null)
+                    continue;
+
+                if (dict[key] == null || !dict[key].Equals(other[key]))
+                    return false;
+            }
+
+            return true;
+        }
+
     }
 }

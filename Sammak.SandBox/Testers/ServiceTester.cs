@@ -135,19 +135,19 @@ namespace Sammak.SandBox.Testers
 
         private static string RootUrl()
         {
-            var beatAuthHost = ConfigurationManager.AppSettings["Beat.Auth.Host"];
+            var authHost = ConfigurationManager.AppSettings["Auth.Host"];
             // NOTE: the root url should end with a "/" so that the path would be properlty appended by the HttpClient class to form a full url.
             // if the ending slash is missing, the last word after the last existing slash would be dropped, then the path gets appended rendering a wrong url.
-            var beatAuthApiPrefix = "api/auth/";
+            var authApiPrefix = "api/auth/";
 
-            if (string.IsNullOrWhiteSpace(beatAuthHost) || beatAuthHost.Length < 1)
+            if (string.IsNullOrWhiteSpace(authHost) || authHost.Length < 1)
             {
-                throw new Exception("The 'Beat.Auth.Host' URL define is missing from the config file!");
+                throw new Exception("The 'Auth.Host' URL define is missing from the config file!");
             }
 
-            // NOTE: the 'Beat.Auth.Port' and/or 'Beat.Auth.ApiPrefix' defines optiaonly could be missing, 
-            // in  which case the 'Beat.Auth.Host' should hold the full path of the host url
-            return $"{beatAuthHost}/{beatAuthApiPrefix}";
+            // NOTE: the 'Auth.Port' and/or 'Auth.ApiPrefix' defines optiaonly could be missing, 
+            // in  which case the 'Auth.Host' should hold the full path of the host url
+            return $"{authHost}/{authApiPrefix}";
         }
 
         private void IPAddressConverterTest()
@@ -237,7 +237,7 @@ namespace Sammak.SandBox.Testers
 
         private void ServiceConstructorTest()
         {
-            var service = new BeatAuthHttpService();
+            var service = new AuthHttpService();
             ConsoleDisplay.ShowObject(service, nameof(service));
         }
     }

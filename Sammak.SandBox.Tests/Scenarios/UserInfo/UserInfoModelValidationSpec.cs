@@ -35,7 +35,7 @@ namespace Sammak.SandBox.Tests.Scenarios.UserInfo
 
             public UserInfoModelValidation()
             {
-                Startup.EnsureIocSetUp();
+                //Startup.EnsureIocSetUp();
             }
 
             public void GivenValidUserInfoObject()

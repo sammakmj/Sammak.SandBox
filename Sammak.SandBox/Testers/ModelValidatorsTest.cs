@@ -45,18 +45,18 @@ namespace Sammak.SandBox.Testers
 
         private void UriTest()
         {
-            string beatAuthHost = ConfigurationManager.AppSettings["Beat.Auth.Host"];
-            string beatAuthPort = ConfigurationManager.AppSettings["Beat.Auth.Port"];
-            string beatAuthApiPrefix = ConfigurationManager.AppSettings["Beat.Auth.ApiPrefix"];
+            string authHost = ConfigurationManager.AppSettings["Auth.Host"];
+            string authPort = ConfigurationManager.AppSettings["Auth.Port"];
+            string authApiPrefix = ConfigurationManager.AppSettings["Auth.ApiPrefix"];
 
-            if (string.IsNullOrWhiteSpace(beatAuthHost) || beatAuthHost.Length < 1)
+            if (string.IsNullOrWhiteSpace(authHost) || authHost.Length < 1)
             {
-                throw new Exception("The 'Beat.Auth.Host' URL define is missing from the config file!");
+                throw new Exception("The 'Auth.Host' URL define is missing from the config file!");
             }
 
-            // NOTE: the 'Beat.Auth.Port' and/or 'Beat.Auth.ApiPrefix' defines optiaonly could be missing, 
-            // in  which case the 'Beat.Auth.Host' should hold the full path of the host url
-            string rootUri = $"{beatAuthHost}{beatAuthPort}/{beatAuthApiPrefix}".TrimEnd();
+            // NOTE: the 'Auth.Port' and/or 'Auth.ApiPrefix' defines optiaonly could be missing, 
+            // in  which case the 'Auth.Host' should hold the full path of the host url
+            string rootUri = $"{authHost}{authPort}/{authApiPrefix}".TrimEnd();
 
             // NOTE: the root url should end with a "/" so that the path would be properlty appended by the HttpClient class to form a full url.
             // if the ending slash is missing, the last word after the last existing slash would be dropped, then the path gets appended rendering a wrong url.

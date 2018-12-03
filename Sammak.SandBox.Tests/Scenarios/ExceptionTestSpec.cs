@@ -32,7 +32,7 @@ namespace Sammak.SandBox.Tests.Scenarios
 
             public ExceptionTestScenario()
             {
-                Startup.EnsureIocSetUp();
+                //Startup.EnsureIocSetUp();
             }
 
             public void GivenSetupIsCorrect()

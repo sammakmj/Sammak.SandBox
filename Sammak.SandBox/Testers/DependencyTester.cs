@@ -1,9 +1,12 @@
-﻿using Sammak.SandBox.DependencyManagement;
+﻿using Sammak.SandBox.Common;
+using Sammak.SandBox.DependencyManagement;
 using Sammak.SandBox.Helpers;
+using Sammak.SandBox.Services;
 using System;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Sammak.SandBox.Testers
 {
@@ -11,7 +14,31 @@ namespace Sammak.SandBox.Testers
     {
         public static void Run()
         {
-            new DependencyTester().PropertyTest();
+            new DependencyTester().FooBarTest();
+        }
+
+        private void FooBarTest()
+        {
+            //logger.LogInformation("Starting application");
+
+            //do the actual work here
+            var bar = AppData.ServiceProvider.GetService<IBarService>();
+            if (bar is null)
+            {
+                ConsoleDisplay.ShowObject("IBarService is null", nameof(FooBarTest));
+            }
+            else
+            {
+                bar.DoSomeRealWork();
+            }
+
+            //var appSettingsService = AppData.ServiceProvider.GetService<IAppSettingsService>();
+            //var env = appSettingsService.GetEnvironment();
+            ////logger.LogInformation($"Env = {env}");
+
+            ////logger.LogInformation("All done!");
+
+            //ConsoleDisplay.ShowObject(env, nameof(appSettingsService.GetEnvironment));
         }
 
         private void PropertyTest()

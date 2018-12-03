@@ -3,9 +3,21 @@ using System.Collections.Generic;
 
 namespace Sammak.SandBox.Models
 {
-
-    public class ComparableDictionary<TKey, TValue> :  Dictionary<TKey, TValue>
+    /// <summary>
+    /// A derrived class of Dictionary<<see cref="TKey"/>, <see cref="TValue"/>>.  
+    /// The instances of this class can be properly compared to each other.
+    /// </summary>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
+    public class ComparableDictionary<TKey, TValue> : Dictionary<TKey, TValue>
     {
+        #region  Equals and Hashcode Overrides
+
+        /// <summary>
+        /// The Equals override compares all items of the dictionaries for their type equality as well as their keys and values equalities.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if (obj is null)
@@ -22,11 +34,11 @@ namespace Sammak.SandBox.Models
                 return false;
 
             // check keys are the same
-            foreach (TKey k in Keys)
-                if (!other.ContainsKey(k))
+            foreach (TKey key in Keys)
+                if (!other.ContainsKey(key))
                     return false;
 
-            // check values are the same
+            // check if all items values of both dictionaries are the same
             foreach (TKey key in Keys)
             {
                 // both null considered to be the same
@@ -40,6 +52,12 @@ namespace Sammak.SandBox.Models
             return true;
         }
 
+        /// <summary>
+        /// The == override compares the two objects of this type for equality
+        /// </summary>
+        /// <param name="item1"></param>
+        /// <param name="item2"></param>
+        /// <returns></returns>
         public static bool operator ==(ComparableDictionary<TKey, TValue> item1, ComparableDictionary<TKey, TValue> item2)
         {
             if (ReferenceEquals(item1, item2))
@@ -50,11 +68,21 @@ namespace Sammak.SandBox.Models
             return item1.Equals(item2);
         }
 
+        /// <summary>
+        /// The == override compares the two objects of this type for inequality
+        /// </summary>
+        /// <param name="item1"></param>
+        /// <param name="item2"></param>
+        /// <returns></returns>
         public static bool operator !=(ComparableDictionary<TKey, TValue> item1, ComparableDictionary<TKey, TValue> item2)
         {
             return !(item1 == item2);
         }
 
+        /// <summary>
+        /// The GetHashCode override prepares a complex hash for the object of this type
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             int hash = 0;
@@ -66,17 +94,25 @@ namespace Sammak.SandBox.Models
             }
             return hash;
         }
+
+        #endregion
+
+        #region Private Helper methods
+
         private int ShiftAndWrap(int value, int positions)
         {
             positions = positions & 0x1F;
 
             // Save the existing bit pattern, but interpret it as an unsigned integer. 
             uint number = BitConverter.ToUInt32(BitConverter.GetBytes(value), 0);
+
             // Preserve the bits to be discarded. 
             uint wrapped = number >> (32 - positions);
+
             // Shift and wrap the discarded bits. 
             return BitConverter.ToInt32(BitConverter.GetBytes((number << positions) | wrapped), 0);
         }
-    }
 
+        #endregion
+    }
 }

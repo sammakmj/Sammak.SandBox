@@ -10,132 +10,72 @@ namespace Sammak.SandBox.Testers
     public class FunctionTest
     {
 
-        #region Private helper class
-        public class UserData
-        {
-            public Guid Id { get; private set; }
-            public string UserName { get; private set; } = "";
-            public string Name { get; private set; } = "";
-            public string Email { get; private set; }
-            public string Domain { get; private set; } = "";
-            public bool IsEmoryUser { get; private set; }
-            public bool IsSsoUser { get; private set; }
-
-            public UserData(string customKVPairs)
-            {
-                //var claimsJson = JsonConvert.SerializeObject(claims, Formatting.Indented);
-                //var customKVPairs = claims.Where(x => x.Type == EMORY_NAMESPACE).FirstOrDefault()?.Value;
-                if (!string.IsNullOrEmpty(customKVPairs))
-                {
-                    var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(customKVPairs);
-
-                    Id = GetId("user_id", values);
-                    UserName = GetStringProperty("user_nickname", values);
-                    Name = GetStringProperty("user_name", values);
-                    Email = GetStringProperty("user_email", values);
-                    IsEmoryUser = GetBooleanProperty("is_emory_user", values);
-                    IsSsoUser = GetBooleanProperty("sso_user", values);
-                    ExtractAndSetDomain();
-                }
-            }
-
-            private string GetStringProperty(string propertyKey, Dictionary<string, string> propertyValues)
-            {
-                if (propertyValues.ContainsKey(propertyKey))
-                {
-                    return propertyValues[propertyKey];
-                }
-                return string.Empty;
-            }
-            private bool GetBooleanProperty(string propertyKey, Dictionary<string, string> propertyValues)
-            {
-                var result = false;
-                if (propertyValues.ContainsKey(propertyKey))
-                {
-                    var str = propertyValues[propertyKey];
-                    bool.TryParse(str, out result);
-                }
-                return result;
-            }
-
-            private Guid GetId(string propertyKey, Dictionary<string, string> propertyValues)
-            {
-                var id = Guid.Empty;
-                // id is of  "ad|<connector name>|userid (Guid)" format
-                // example: ad|Auth0-MJS-Test|759006bf-8d53-4431-9b25-bd07affc1131
-                if (propertyValues.ContainsKey(propertyKey))
-                {
-                    var str = propertyValues[propertyKey];
-                    int idx = string.IsNullOrEmpty(str) ? -1 : str.LastIndexOf('|');
-                    if (idx != -1)
-                        Guid.TryParse(str.Substring(idx + 1), out id);
-                }
-                return id;
-            }
-
-            private void ExtractAndSetDomain()
-            {
-                var emailText = (Email) ?? "";
-                if (emailText.Contains("@"))
-                {
-                    string[] split = emailText.Split('@');
-                    Domain = split.Last().Split('.')[0];
-                }
-            }
-
-        }
-
-        #endregion
-
         public static void Run()
         {
-            new FunctionTest().EqualityTest();
+            new FunctionTest().DictionaryEqualTest();
         }
 
-        private void ComparableDictionaryEqualityTest()
+        private void DictionaryEqualTest()
         {
-            ComparableDictionary<string, string> dict1 = new ComparableDictionary<string, string>() { { "key", "val1" } };
-            ComparableDictionary<string, string>  dict2 = new ComparableDictionary<string, string>() { { "key", "val1" } };
-            ComparableDictionary<string, string>  dict3 = new ComparableDictionary<string, string>() { { "key", "val1" } };
-            dict1 = null;
-            dict3 = null;
-            dict2 = dict3;
-            var eq = dict1 == dict2;
-            //eq = dict1.Equals(dict2);
-            ConsoleDisplay.ShowObject(eq, nameof(eq));
+            var dict1 = new Dictionary<string, string>() { { "key", "val" } };
+            var dict2 = new Dictionary<string, string>() { { "key", "val" } };
+            var sameType = dict1.Equals(dict2);
+            ConsoleDisplay.ShowObject(sameType, nameof(sameType));
         }
 
-        private void EqualityTest()
+        private void GuidStrTest()
         {
-            ExternalMessagePayload item1 = new ExternalMessagePayload
-            {
-                Metadata = new ComparableDictionary<string, string>() { { "key", "val1" },  { "key2", "val2" } }
-            };
-            ExternalMessagePayload item2 = new ExternalMessagePayload
-            {
-                Metadata = new ComparableDictionary<string, string>() { { "key", "val1" } }
-            };
-            //item1 = null;
-            //item2 = null;
-            item2 = item1;
-            var eq = item1 == item2;
-            ConsoleDisplay.ShowObject(item1.Metadata["key2"], nameof(item1));
-            //var eq = item1.Equals(item2);
-            ConsoleDisplay.ShowObject(eq, nameof(eq));
-            item2.Metadata["key2"] = "value3";
-            eq = item1 == item2;
-            ConsoleDisplay.ShowObject(eq, nameof(eq));
-            ConsoleDisplay.ShowObject(item1.Metadata["key2"], nameof(item1.Metadata));
+            var guidStr = "1234";
+            var guid = new Guid(guidStr);
         }
 
-        private void UserDataTest()
-        {
-            string json = "{\"user_id\":\"ad|Auth0-MJS-Test|759006bf-8d53-4431-9b25-bd07affc1131\",\"user_name\":\"sammakmj\",\"name\":\"MJ Sammak\",\"email\":\"sammakmj@emory.com\",\"connection\":\"Auth0-MJS-Test\"}";
-            var userData = new UserData(json);
-            var result = JsonConvert.SerializeObject(userData, Formatting.Indented);
-            Console.WriteLine($"result = {result}");
+        //private void ComparableDictionaryEqualityTest()
+        //{
+        //    ComparableDictionary<string, string> dict1 = new ComparableDictionary<string, string>() { { "key", "val1" } };
+        //    ComparableDictionary<string, string>  dict2 = new ComparableDictionary<string, string>() { { "key2", "val2" } };
+        //    ComparableDictionary<string, string>  dict3 = new ComparableDictionary<string, string>() { { "key", "val1" } };
+        //    //dict1 = null;
+        //    //dict3 = null;
+        //    //dict2 = dict3;
+        //    CompareTwoComparableDictionaries(dict1, dict2);
+        //}
 
-        }
+        //private void CompareTwoComparableDictionaries(IComparableDictionary<string, string> dict1, IComparableDictionary<string, string> dict2)
+        //{
+        //    var eq = dict1 == dict2;
+        //    //eq = dict1.Equals(dict2);
+        //    ConsoleDisplay.ShowObject(eq, nameof(eq));
+
+        //    var dict = (ComparableDictionary<string, string>)dict1;
+        //    var sameType = dict != null;
+        //    ConsoleDisplay.ShowObject(sameType, nameof(sameType));
+        //}
+
+        //private void EqualityTest()
+        //{
+        //    //ConsoleDisplay.ShowObject(configuration, nameof(item1));
+
+
+        //ExternalMessagePayload item1 = new ExternalMessagePayload
+        //    {
+        //        Metadata = new ComparableDictionary<string, string>() { { "key", "val1" },  { "key2", "val2" } }
+        //    };
+        //    ExternalMessagePayload item2 = new ExternalMessagePayload
+        //    {
+        //        Metadata = new ComparableDictionary<string, string>() { { "key", "val1" } }
+        //    };
+        //    //item1 = null;
+        //    //item2 = null;
+        //    item2 = item1;
+        //    var eq = item1 == item2;
+        //    ConsoleDisplay.ShowObject(item1.Metadata["key2"], nameof(item1));
+        //    //var eq = item1.Equals(item2);
+        //    ConsoleDisplay.ShowObject(eq, nameof(eq));
+        //    item2.Metadata["key2"] = "value3";
+        //    eq = item1 == item2;
+        //    ConsoleDisplay.ShowObject(eq, nameof(eq));
+        //    ConsoleDisplay.ShowObject(item1.Metadata["key2"], nameof(item1.Metadata));
+        //}
 
         void GetDataSet()
         {

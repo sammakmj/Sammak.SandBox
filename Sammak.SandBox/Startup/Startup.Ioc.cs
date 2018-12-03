@@ -1,7 +1,12 @@
-﻿using Sammak.Core.Common.Util;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Sammak.Core.Common.Util;
 using Sammak.Core.Common.Validation;
 using Sammak.Core.Common.Validation.Impl;
+using Sammak.SandBox.Common;
 using Sammak.SandBox.Models.TokenString;
+using Sammak.SandBox.Services;
+using Sammak.SandBox.Services.Impl;
 using StructureMap;
 
 namespace Sammak.SandBox
@@ -31,6 +36,18 @@ namespace Sammak.SandBox
         /// The container.
         /// </value>
         public static IContainer Container { get; set; }
+
+        public void ConfigureIoc()
+        {
+            AppData.DependencyServices = new ServiceCollection()
+                .AddLogging()
+                .AddSingleton<IFooService, FooService>()
+                .AddSingleton<IBarService, BarService>()
+                .AddSingleton<IAppSettingsService, AppSettingsService>()
+                .AddSingleton<IValidationFactory, ValidationFactory>();
+
+            AppData.ServiceProvider = AppData.DependencyServices.BuildServiceProvider();
+        }
 
         /// <summary>
         /// Builds the container (private).
