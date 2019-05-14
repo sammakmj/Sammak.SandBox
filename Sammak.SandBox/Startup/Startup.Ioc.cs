@@ -20,14 +20,14 @@ namespace Sammak.SandBox
         /// Gets or builds the container
         /// </summary>
         /// <returns></returns>
-        public static IContainer EnsureIocSetUp()
-        {
-            if (DependencyResolver.Container == null && !_initializing)
-                return UseIoc();
-            return DependencyResolver.Container;
-        }
+        //public static IContainer EnsureIocSetUp()
+        //{
+        //    if (DependencyResolver.Container == null && !_initializing)
+        //        return UseIoc();
+        //    return DependencyResolver.Container;
+        //}
 
-        private static bool _initializing;
+        //private static bool _initializing;
 
         /// <summary>
         /// Gets or sets the container (private).
@@ -35,73 +35,73 @@ namespace Sammak.SandBox
         /// <value>
         /// The container.
         /// </value>
-        public static IContainer Container { get; set; }
+        //public static IContainer Container { get; set; }
 
-        public void ConfigureIoc()
-        {
-            AppData.DependencyServices = new ServiceCollection()
-                .AddLogging()
-                .AddSingleton<IFooService, FooService>()
-                .AddSingleton<IBarService, BarService>()
-                .AddSingleton<IAppSettingsService, AppSettingsService>()
-                .AddSingleton<IValidationFactory, ValidationFactory>();
+        //public void ConfigureIoc()
+        //{
+        //    AppData.DependencyServices = new ServiceCollection()
+        //        .AddLogging()
+        //        .AddSingleton<IFooService, FooService>()
+        //        .AddSingleton<IBarService, BarService>()
+        //        .AddSingleton<IAppSettingsService, AppSettingsService>()
+        //        .AddSingleton<IValidationFactory, ValidationFactory>();
 
-            AppData.ServiceProvider = AppData.DependencyServices.BuildServiceProvider();
-        }
+        //    AppData.ServiceProvider = AppData.DependencyServices.BuildServiceProvider();
+        //}
 
         /// <summary>
         /// Builds the container (private).
         /// </summary>
         /// <returns></returns>
-        protected internal static IContainer UseIoc()
-        {
-            //Logger.Trace("UseIoc: Initializing Container.");
-            _initializing = true;
+        //protected internal static IContainer UseIoc()
+        //{
+        //    //Logger.Trace("UseIoc: Initializing Container.");
+        //    _initializing = true;
 
-            try
-            {
-                Container = new Container(cfg =>
-                {
-                    cfg.For<System.Configuration.Abstractions.IConfigurationManager>()
-                        .Use(() => DependencyResolver.ConfigurationManager);
+        //    try
+        //    {
+        //        Container = new Container(cfg =>
+        //        {
+        //            cfg.For<System.Configuration.Abstractions.IConfigurationManager>()
+        //                .Use(() => DependencyResolver.ConfigurationManager);
 
-                    cfg.Scan(s =>
-                    {
-                        s.TheCallingAssembly();
-                        s.AssembliesFromApplicationBaseDirectory();
-                        s.IncludeNamespace("Sammak.SandBox.Ioc");
-                        s.LookForRegistries();
-                        s.WithDefaultConventions();
-                    });
+        //            cfg.Scan(s =>
+        //            {
+        //                s.TheCallingAssembly();
+        //                s.AssembliesFromApplicationBaseDirectory();
+        //                s.IncludeNamespace("Sammak.SandBox.Ioc");
+        //                s.LookForRegistries();
+        //                s.WithDefaultConventions();
+        //            });
 
-                    cfg.For<IValidationFactory>().Use<ValidationFactory>().Ctor<IContainer>("container").Is(DependencyResolver.Container);
+        //            cfg.For<IValidationFactory>().Use<ValidationFactory>().Ctor<IContainer>("container").Is(DependencyResolver.Container);
 
-                    //c.For<ISessionFactory>().Singleton().Use(ConfigureOrm());
-                    //c.For<ISession>().LifecycleIs(new ThreadLocalStorageLifecycle()).Use(ctx => ctx.GetInstance<ISessionFactory>().OpenSession());
-                    //c.For<IBackgroundJobClient>().Use<BackgroundJobClient>();
-                    //c.For<IQueryFactory>().Use<QueryFactory>().Ctor<IContainer>("container").Is(DependencyResolver.Container);
-                    //c.For<Core.MassTransit.IBusFactory>().Use<Core.MassTransit.BusFactory>();
-                    //c.For<IEnumService>().Singleton().Use<EnumService>();
-                    //c.For<IValidator<AuditData>>().Singleton().Use<AuditData.AuditDataValidator>();
-                    //c.For<IAccessTokenService>().Singleton().Use<AccessTokenService>();
+        //            //c.For<ISessionFactory>().Singleton().Use(ConfigureOrm());
+        //            //c.For<ISession>().LifecycleIs(new ThreadLocalStorageLifecycle()).Use(ctx => ctx.GetInstance<ISessionFactory>().OpenSession());
+        //            //c.For<IBackgroundJobClient>().Use<BackgroundJobClient>();
+        //            //c.For<IQueryFactory>().Use<QueryFactory>().Ctor<IContainer>("container").Is(DependencyResolver.Container);
+        //            //c.For<Core.MassTransit.IBusFactory>().Use<Core.MassTransit.BusFactory>();
+        //            //c.For<IEnumService>().Singleton().Use<EnumService>();
+        //            //c.For<IValidator<AuditData>>().Singleton().Use<AuditData.AuditDataValidator>();
+        //            //c.For<IAccessTokenService>().Singleton().Use<AccessTokenService>();
 
-                    FluentValidation.AssemblyScanner.FindValidatorsInAssemblyContaining<TokenStringModelValidator>()
-                        .ForEach(r =>
-                        {
-                            cfg.For(r.InterfaceType)
-                                .Singleton()
-                                .Use(r.ValidatorType);
-                        });
-                });
-                DependencyResolver.Container = Container;
-            }
-            finally
-            {
-                _initializing = false;
-            }
+        //            FluentValidation.AssemblyScanner.FindValidatorsInAssemblyContaining<TokenStringModelValidator>()
+        //                .ForEach(r =>
+        //                {
+        //                    cfg.For(r.InterfaceType)
+        //                        .Singleton()
+        //                        .Use(r.ValidatorType);
+        //                });
+        //        });
+        //        DependencyResolver.Container = Container;
+        //    }
+        //    finally
+        //    {
+        //        _initializing = false;
+        //    }
 
-            //Logger.Trace("UseIoc: Container initialized.");
-            return DependencyResolver.Container;
-        }
+        //    //Logger.Trace("UseIoc: Container initialized.");
+        //    return DependencyResolver.Container;
+        //}
     }
 }

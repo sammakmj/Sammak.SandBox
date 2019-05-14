@@ -69,19 +69,19 @@ namespace Sammak.SandBox.Testers
 
 
             return;
-            var client = new HttpClient { BaseAddress = uri };
-            ConsoleDisplay.ShowObject(client,  nameof(client));
+            //var client = new HttpClient { BaseAddress = uri };
+            //ConsoleDisplay.ShowObject(client,  nameof(client));
 
-            var payload = new SsoAuthUriRequest { CallBackUrl = "http://www.xyz.com" };
-            var payloadJson = JsonConvert.SerializeObject(payload, Formatting.None);
-            var payloadStringContent = new StringContent(payloadJson, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync("getssourl", payloadStringContent).GetAwaiter().GetResult();
-            ConsoleDisplay.ShowObject(response.IsSuccessStatusCode,  nameof(response.IsSuccessStatusCode));
-            ConsoleDisplay.ShowObject(response, nameof(response));
+            //var payload = new SsoAuthUriRequest { CallBackUrl = "http://www.xyz.com" };
+            //var payloadJson = JsonConvert.SerializeObject(payload, Formatting.None);
+            //var payloadStringContent = new StringContent(payloadJson, Encoding.UTF8, "application/json");
+            //HttpResponseMessage response = client.PostAsync("getssourl", payloadStringContent).GetAwaiter().GetResult();
+            //ConsoleDisplay.ShowObject(response.IsSuccessStatusCode,  nameof(response.IsSuccessStatusCode));
+            //ConsoleDisplay.ShowObject(response, nameof(response));
 
-            var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            var result = JsonConvert.DeserializeObject<SsoAuthUrlResult>(responseString);
-            ConsoleDisplay.ShowObject(result,  nameof(result));
+            //var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            //var result = JsonConvert.DeserializeObject<SsoAuthUrlResult>(responseString);
+            //ConsoleDisplay.ShowObject(result,  nameof(result));
 
         }
 

@@ -1,13 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.106
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammak.SandBox", "Sammak.SandBox\Sammak.SandBox.csproj", "{3E6BFB47-4D7F-4ACA-A548-B486ED58E8EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sammak.SandBox", "Sammak.SandBox\Sammak.SandBox.csproj", "{3E6BFB47-4D7F-4ACA-A548-B486ED58E8EE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sammak.Core.Common", "..\Sammak.Core.Common\Sammak.Core.Common\Sammak.Core.Common.csproj", "{8411B463-DB6A-4FBF-88EF-45D08B709EB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammak.SandBox.Tests", "Sammak.SandBox.Tests\Sammak.SandBox.Tests.csproj", "{765F00D7-06A4-4178-A3A5-333DE279B7FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sammak.SandBox.Tests", "Sammak.SandBox.Tests\Sammak.SandBox.Tests.csproj", "{765F00D7-06A4-4178-A3A5-333DE279B7FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTS Print Server", "..\OTS Print Server\OTS Print Server.csproj", "{7FED42F4-7C7A-4FE7-933C-1C701D582581}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarCodeGenerator", "..\BarCodeGenerator\BarCodeGenerator.csproj", "{4FF5A33F-81F3-439C-BB7A-CF2058008599}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammak.WcfLabelPrinting", "..\Sammak.WcfLabelPrinting\Sammak.WcfLabelPrinting.csproj", "{21CE9133-4733-456B-91B3-DBFD79F2768B}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Sammak.SqlProject", "Sammak.SqlProject\Sammak.SqlProject.sqlproj", "{F7B506B8-47D4-49B4-A70A-85C0F2A6DBA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,24 @@ Global
 		{765F00D7-06A4-4178-A3A5-333DE279B7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{765F00D7-06A4-4178-A3A5-333DE279B7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{765F00D7-06A4-4178-A3A5-333DE279B7FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FED42F4-7C7A-4FE7-933C-1C701D582581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FED42F4-7C7A-4FE7-933C-1C701D582581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FED42F4-7C7A-4FE7-933C-1C701D582581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FED42F4-7C7A-4FE7-933C-1C701D582581}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FF5A33F-81F3-439C-BB7A-CF2058008599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FF5A33F-81F3-439C-BB7A-CF2058008599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FF5A33F-81F3-439C-BB7A-CF2058008599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FF5A33F-81F3-439C-BB7A-CF2058008599}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21CE9133-4733-456B-91B3-DBFD79F2768B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21CE9133-4733-456B-91B3-DBFD79F2768B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21CE9133-4733-456B-91B3-DBFD79F2768B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21CE9133-4733-456B-91B3-DBFD79F2768B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7B506B8-47D4-49B4-A70A-85C0F2A6DBA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7B506B8-47D4-49B4-A70A-85C0F2A6DBA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7B506B8-47D4-49B4-A70A-85C0F2A6DBA4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F7B506B8-47D4-49B4-A70A-85C0F2A6DBA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7B506B8-47D4-49B4-A70A-85C0F2A6DBA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7B506B8-47D4-49B4-A70A-85C0F2A6DBA4}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

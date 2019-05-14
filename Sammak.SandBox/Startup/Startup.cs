@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sammak.SandBox.Common;
 using Sammak.SandBox.Models;
 using Sammak.SandBox.Testers;
 using System.IO;
@@ -14,17 +15,17 @@ namespace Sammak.SandBox
     {
         public IServiceCollection Services { get; set; }
 
-        public Startup()
-        {
-        }
+        //public Startup()
+        //{
+        //}
 
         public static void ConfigureAndRun()
         {
             //UseIoc();
-            var startup = new Startup();
-            startup.ConfigureIoc();
-            startup.ConfigureAppSettings();
-            startup.ConfigureLogging();
+            //var startup = new Startup();
+            AppData.ConfigureIoc();
+            AppData.ConfigureAppSettings();
+            AppData.ConfigureLogging();
 
             MainTester.Run();
         }

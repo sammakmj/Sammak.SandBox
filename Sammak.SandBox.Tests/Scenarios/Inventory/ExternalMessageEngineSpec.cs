@@ -50,7 +50,7 @@ namespace Sammak.SandBox.Tests.Scenarios.Inventory
             var payload = new ExternalMessagePayload
             {
                 MessageType = ExternalMessageType.CancelOrder,
-                Id = Guid.NewGuid().ToString(),
+                OrderId = Guid.NewGuid().ToString(),
                 SourceSystemId = 1,
                 ParameterDictionary = new Dictionary<string, string>
                 {
@@ -61,7 +61,7 @@ namespace Sammak.SandBox.Tests.Scenarios.Inventory
             Expression<Func<ExternalMessagePayload, bool>> matchedParam =
                 p =>
                     p.MessageType == payload.MessageType &&
-                    p.Id == payload.Id &&
+                    p.OrderId == payload.OrderId &&
                     p.UserName == payload.UserName;
 
             //Act

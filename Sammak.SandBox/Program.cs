@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Sammak.SandBox.Common;
 using Sammak.SandBox.Testers;
 using System;
 using System.IO;
@@ -12,7 +13,12 @@ namespace Sammak.SandBox
         {
             try
             {
-                Startup.ConfigureAndRun();
+                //Startup.ConfigureAndRun();
+                //AppData.ConfigureIoc();
+                //AppData.ConfigureAppSettings();
+                //AppData.ConfigureLogging();
+
+                MainTester.Run();
             }
             catch (Exception ex)
             {

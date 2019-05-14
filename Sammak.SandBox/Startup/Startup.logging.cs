@@ -12,9 +12,9 @@ namespace Sammak.SandBox
     {
         public void ConfigureLogging()
         {
-            if (AppData.DependencyServices != null)
+            if (AppData.ServiceCollection != null)
             {
-                AppData.DependencyServices
+                AppData.ServiceCollection
                     .AddLogging();
 
                 if (AppData.ServiceProvider != null)

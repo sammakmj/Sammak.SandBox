@@ -20,10 +20,26 @@ namespace Sammak.SandBox.Helpers
             Console.WriteLine(JsonConvert.SerializeObject(instance, Formatting.Indented));
         }
 
-        public static void ShowIPAddress<T>(T instance, string nameOfInstance)
+         public static void ShowText(string message, string nameOfInstance)
+        {
+            Console.WriteLine($"{nameOfInstance}: {message}");
+        }
+
+         public static void ShowHex(long number, string nameOfInstance)
+        {
+            Console.WriteLine($"{nameOfInstance}: {Environment.NewLine}\t{number:X}");
+        }
+
+         public static void ShowUlongHex(ulong number, string nameOfInstance)
+        {
+            Console.WriteLine($"{nameOfInstance}: {Environment.NewLine}\t{number:X}");
+        }
+
+       public static void ShowIPAddress<T>(T instance, string nameOfInstance)
         {
             Console.WriteLine($"{nameOfInstance}:");
             Console.WriteLine(JsonConvert.SerializeObject(instance, _ipConverterSettings));
         }
+
     }
 }

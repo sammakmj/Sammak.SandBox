@@ -260,39 +260,9 @@ namespace Sammak.SandBox.Helpers
             return (T)Enum.ToObject(typeof(T), value);
         }
 
-        public static bool Equals<TKey, TValue> (this Dictionary<TKey, TValue> dict, object obj) //where TKey: Type where TValue: Type
+        public static string ToBitsString(this byte value)
         {
-            if (obj is null)
-                return false;
-
-            if (ReferenceEquals(dict, obj))
-                return true;
-
-            if (dict.GetType() != obj.GetType())
-                return false;
-
-            var other = (Dictionary<TKey, TValue>)obj;
-            if (dict.Count != other.Count)
-                return false;
-
-            // check keys are the same
-            foreach (TKey k in dict.Keys)
-                if (!other.ContainsKey(k))
-                    return false;
-
-            // check values are the same
-            foreach (TKey key in dict.Keys)
-            {
-                // both null considered to be the same
-                if (dict[key] == null && other[key] == null)
-                    continue;
-
-                if (dict[key] == null || !dict[key].Equals(other[key]))
-                    return false;
-            }
-
-            return true;
+            return Convert.ToString(value, 2).PadLeft(8, '0');
         }
-
     }
 }

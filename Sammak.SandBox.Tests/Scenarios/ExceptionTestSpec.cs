@@ -41,14 +41,14 @@ namespace Sammak.SandBox.Tests.Scenarios
 
             public void WhenActionThrowsException()
             {
-                action = () => throw new ExecutionEngineException();
+                action = () => throw new SystemException();
             }
 
             public void ThenTheActionShouldThrowException()
             {
                 action
                     .Should()
-                    .Throw<ExecutionEngineException>();
+                    .Throw<SystemException>();
             }
         }
 

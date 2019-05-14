@@ -24,7 +24,7 @@ namespace Sammak.SandBox.Testers
     {
         public static void Run()
         {
-            new ServiceTester().NullGuidTest();
+            new ServiceTester().IPAddressTest();
         }
 
         private void NullGuidTest()

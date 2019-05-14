@@ -10,7 +10,7 @@ namespace Sammak.SandBox.Models
 
         public int MessageType { get; set; }
 
-        public string Id { get; set; }
+        public string OrderId { get; set; }
 
         public int SourceSystemId { get; set; }
 
